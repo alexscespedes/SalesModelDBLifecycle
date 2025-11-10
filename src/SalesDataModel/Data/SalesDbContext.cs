@@ -59,5 +59,23 @@ public class SalesDbContext : DbContext
         modelBuilder.Entity<OrderItem>()
             .Property(oi => oi.UnitPrice)
             .HasPrecision(18, 2);
+
+        // Add Seed Data Using HasData
+        modelBuilder.Entity<Category>().HasData(
+            new Category { CategoryId = 1, Name = "Electronics" },
+            new Category { CategoryId = 2, Name = "Books" },
+            new Category { CategoryId = 3, Name = "Office Suppliers" }
+        );
+
+        modelBuilder.Entity<Product>().HasData(
+            new Product { ProductId = 1, Name = "Laptop", Price = 1200 },
+            new Product { ProductId = 2, Name = "C# in Depth", Price = 60 },
+            new Product { ProductId = 3, Name = "Desk Chair", Price = 150 }
+        );
+
+        modelBuilder.Entity<ProductCategory>().HasData(
+            new ProductCategory { ProductId = 1, CategoryId = 1, AssignedtAt = new DateTime (2025, 05, 03, 12, 0, 0, DateTimeKind.Utc)},
+            new ProductCategory { ProductId = 2, CategoryId = 2, AssignedtAt = new DateTime (2025, 05, 03, 12, 0, 0, DateTimeKind.Utc)}
+        );
     }
 }
