@@ -10,9 +10,12 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<SalesDbContext>();
-    DbInitializer.Initialize(context);
+    var db = scope.ServiceProvider.GetRequiredService<SalesDbContext>();
+    var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+
+    db.Database.Migrate();
+
+    await DataSeeder.SeedAsync(db, env);
 }
 
 app.Run();
